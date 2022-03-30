@@ -13,7 +13,7 @@ import Meetup from './components/pages/meet-up/Meetup';
 import Register from './components/pages/register/Register'
 // import { useSelector } from 'react-redux';
 import store from './features/store/store'
-import WhereHaveYouBeen from './components/add-new-place.js/WhereHaveYouBeen';
+import WhereHaveYouBeen from './components/pages/add-new-place.js/WhereHaveYouBeen';
 
 function App() {
   // const { isLoggedIn } = useSelector(state => state.registeLoginReducer);
