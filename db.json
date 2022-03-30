@@ -1,0 +1,24 @@
+{
+  "users": [
+    {
+      "fullname": "Georgi",
+      "username": "gstaykov",
+      "email": "asd@abv.bg",
+      "password": "!1qwertQQQQ",
+      "confirmPassword": "!1qwertQQQQ",
+      "acceptTerms": true,
+      "id": 1
+    },
+    {
+      "fullname": "georgi",
+      "username": "georgi",
+      "email": "gogo@gmail.com",
+      "password": "!1qwertQQQQ",
+      "confirmPassword": "!1qwertQQQQ",
+      "acceptTerms": true,
+      "id": 2
+    }
+  ],
+  "posts": [],
+  "recipe": []
+}
