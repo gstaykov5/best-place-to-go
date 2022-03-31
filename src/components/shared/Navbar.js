@@ -54,8 +54,8 @@ const Navbar = () => {
   };
 
   return (
-    <AppBar position="static" className={classes.appbar} >
-      <Container maxWidth="xl">
+    <AppBar position="static" className={classes.appbar}>
+      <Container maxWidth="xl" >
         <Toolbar disableGutters>
 
 
@@ -70,14 +70,14 @@ const Navbar = () => {
 
           <ResponsiveButton />
           
-          <Typography
+          {/* <Typography
             variant="h6"
             noWrap
             component="div"
             sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}
           >
             Best place to go
-          </Typography>
+          </Typography> */}
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {isLoggedIn && isLoggedInPages.map((page) => (
               <Button
@@ -105,7 +105,7 @@ const Navbar = () => {
           {isLoggedIn && <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt={user.username} src="/static/images/avatar/2.jpg" />
+                <Avatar alt={user.username} src="https://www.foodsafetynews.com/files/2021/03/map-Canada.jpg" />
               </IconButton>
             </Tooltip>
             <Menu

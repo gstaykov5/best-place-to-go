@@ -28,7 +28,7 @@ const BestPlaceToGo = props => {
   };
 
   return (
-    <Grid 
+    <Grid
       container
       spacing={0}
       direction="column"
@@ -37,9 +37,6 @@ const BestPlaceToGo = props => {
       justify="center"
     >
       <ImageList sx={{ width: 1000 }}>
-        <ImageListItem key="Subheader" cols={2}>
-          {/* <Typography variant="h3">Best places to go</Typography> */}
-        </ImageListItem>
         {itemData.map((item) => (
           <ImageListItem key={item.img}>
             <img
@@ -64,16 +61,12 @@ const BestPlaceToGo = props => {
         ))}
       </ImageList>
 
-
-    
       <Stack spacing={2} sx={{ width: '100%' }}>
         <Snackbar open={openSnackBar} autoHideDuration={6000} onClose={handleClose}>
           <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
             {message}
           </Alert>
         </Snackbar>
-        {/* <Alert severity="error">This is an error message!</Alert>
-        <Alert severity="success">This is a success message!</Alert> */}
       </Stack>
     </Grid>
   )

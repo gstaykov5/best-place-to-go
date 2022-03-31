@@ -1,20 +1,21 @@
 import React, { Fragment } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from "react-redux";
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useDispatch } from "react-redux";
 
 import { Paper, Box, Grid, TextField, Typography, FormControlLabel, Checkbox, Button } from '@material-ui/core';
+import { FormControl, InputLabel, NativeSelect } from '@mui/material';
 
-import  validationSchema  from './validationSchema';
+import  validationRegistrationSchema  from './validationRegistrationSchema';
 import { registration } from '../../../features/actions/actionAuth';
-import { useNavigate } from 'react-router-dom';
 
 const Register = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch();
     
   const { register, control, handleSubmit, formState: { errors } } = useForm({
-    resolver: yupResolver(validationSchema)
+    resolver: yupResolver(validationRegistrationSchema)
   });
 
   const onSubmit = data => {
@@ -46,7 +47,7 @@ const Register = () => {
                 {errors.fullname?.message}
               </Typography>
             </Grid>
-            {/* <Grid item sx={12} sm={6}>
+            <Grid item sx={12} sm={6}>
               <Box sx={{ minWidth: 120 }}>
                 <FormControl fullWidth>
                   <InputLabel variant="standard" htmlFor="uncontrolled-native">
@@ -60,8 +61,8 @@ const Register = () => {
                     name: 'gender',
                     id: 'uncontrolled-native',
                   }}
-                  {...register('gender')}
-                  error={errors.gender ? true : false}
+                  // {...register('gender')}
+                  // error={errors.gender ? true : false}
                 >
                   <option value={'empty'}></option>
                   <option value={'mele'}>Mele</option>
@@ -69,7 +70,7 @@ const Register = () => {
                 </NativeSelect>
                 </FormControl>
               </Box>
-            </Grid> */}
+            </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
                 required

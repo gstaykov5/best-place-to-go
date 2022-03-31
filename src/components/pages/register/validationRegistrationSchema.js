@@ -1,6 +1,6 @@
 import * as Yup from 'yup';
 
-const validationSchema = Yup.object().shape({
+const validationRegistrationSchema = Yup.object().shape({
     fullname: Yup.string()
         .required('Fullname is required'),
     username: Yup.string()
@@ -29,4 +29,4 @@ const validationSchema = Yup.object().shape({
         // .oneOf([0 , 1]),
 })
 
-export default validationSchema;
+export default validationRegistrationSchema;

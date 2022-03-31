@@ -15,6 +15,7 @@
       "email": "gogo@gmail.com",
       "password": "!1qwertQQQQ",
       "confirmPassword": "!1qwertQQQQ",
+      "role":"admin",
       "acceptTerms": true,
       "id": 2
     }
