@@ -9,6 +9,7 @@ import Box from '@mui/material/Box';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import { useSelector } from 'react-redux';
+import { Button } from '@mui/material';
 
 const isLoggedInPages = ['Home', 'Meetup', 'BestPlaceToGo', 'WhereHaveYouBeen?', 'Favorite'];
 const isNotLoggedInPages = ['Home', 'Register', 'Login'];
@@ -50,12 +51,20 @@ const ResponsiveButton = props => {
             >
               {isLoggedIn && isLoggedInPages.map((page) => (
                 <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center"><Link to={`${page}`}>{page}</Link></Typography>
+                  <Link to={`${page}`} style={{ textDecoration: 'none'}}>
+                    <Button textalign="center">
+                      {page}
+                    </Button>
+                  </Link>
                 </MenuItem>
               ))}
               {!isLoggedIn && isNotLoggedInPages.map((page) => (
                 <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center"><Link to={`${page}`}>{page}</Link></Typography>
+                  <Link to={`${page}`} style={{ textDecoration: 'none'}}>
+                    <Button textalign="center">
+                      {page}
+                    </Button>
+                  </Link>
                 </MenuItem>
               ))}
             </Menu>

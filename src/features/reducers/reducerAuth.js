@@ -1,4 +1,4 @@
-import { REGISTER_SUCCESS, REGISTER_FAIL, LOGIN_SUCCESS, LOGIN_FAIL, LOGOUT } from "../actions/type";
+import { REGISTER_SUCCESS, REGISTER_FAIL, UPDATE_USER, LOGIN_SUCCESS, LOGIN_FAIL, LOGOUT } from "../actions/type";
 
 const user = JSON.parse(localStorage.getItem('user'));
 
@@ -12,6 +12,8 @@ const registeLoginReducer = (state = initialState, action) => {
             return { ...state, isLoggedIn: false };
         case REGISTER_FAIL:
             return { ...state, isLoggedIn: false };
+        case UPDATE_USER:
+            return {...state, isLoggedIn: true, user: payload.user}
         case LOGIN_SUCCESS:
             return { ...state, isLoggedIn: true, user: payload.user };
         case LOGIN_FAIL:

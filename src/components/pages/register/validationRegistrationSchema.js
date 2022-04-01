@@ -17,7 +17,7 @@ const validationRegistrationSchema = Yup.object().shape({
             /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
             "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character"
         )
-        .min(6, 'Password must be at least 6 characters')
+        // .min(6, 'Password must be at least 6 characters')
         .max(40, 'Password must not exceed 40 characters'),
     confirmPassword: Yup.string()
         .required('Confirm Password is required')

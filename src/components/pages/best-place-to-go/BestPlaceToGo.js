@@ -5,6 +5,8 @@ import { useSelector } from 'react-redux';
 import MuiAlert from '@mui/material/Alert';
 import { Grid, IconButton, ImageList, ImageListItem, ImageListItemBar, Typography, Snackbar, Stack } from '@mui/material';
 import InfoIcon from '@mui/icons-material/Info';
+import FavoriteBorderSharpIcon from '@mui/icons-material/FavoriteBorderSharp';
+import FavoriteSharpIcon from '@mui/icons-material/FavoriteSharp';
 
 const Alert = forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -44,7 +46,28 @@ const BestPlaceToGo = props => {
               srcSet={`${item.img}?w=248&fit=crop&auto=format&dpr=2 2x`}
               alt={item.title}
               loading="lazy"
-              />
+            />
+
+            <ImageListItemBar
+              sx={{
+                background:
+                  'linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, ' +
+                  'rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)',
+              }}
+              title={item.title}
+              position="top"
+              actionIcon={
+                <IconButton
+                  sx={{ color: 'pink' }}
+                  // aria-label={`star ${item.title}`}
+                >
+                  <FavoriteBorderSharpIcon />
+                  {/* <FavoriteSharpIcon /> */}
+                </IconButton>
+              }
+              actionPosition="left"
+            />
+
             <ImageListItemBar
               title={item.title}
               subtitle={item.author}

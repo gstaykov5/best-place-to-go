@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 import AppBar from '@mui/material/AppBar';
@@ -8,7 +8,6 @@ import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import Menu from '@mui/material/Menu';
-import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
@@ -24,13 +23,13 @@ const useStyles = makeStyles({
   appbar: {
     width: '99%',
     margin: 'auto',
-    background: 'linear-gradient(45deg, #BA2B04 20%, #26F40A 90%)'
+    background: 'linear-gradient(45deg, #BA2B04 25%, #26F40A 90%)'
   },
 });
 
 const isLoggedInPages = ['Home', 'Meetup', 'BestPlaceToGo', 'WhereHaveYouBeen?', 'Favorite'];
 const isNotLoggedInPages = ['Home', 'Register', 'Login'];
-const settings = ['Profile', 'Account', 'Favorite', 'WhereHaveYouBeen?', 'Logout'];
+const settings = ['Profile', 'Account', 'Favorite', 'WhereHaveYouBeen?', 'ControlUsers', 'Logout'];
 
 const Navbar = () => {
   const classes = useStyles();
@@ -70,31 +69,30 @@ const Navbar = () => {
 
           <ResponsiveButton />
           
-          {/* <Typography
-            variant="h6"
-            noWrap
-            component="div"
-            sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}
-          >
-            Best place to go
-          </Typography> */}
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {isLoggedIn && isLoggedInPages.map((page) => (
-              <Button
-                key={page}
-                // onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: 'white', display: 'block' }}
-              >
-                <Link to={`${page}`}>{page}</Link>
-              </Button>))}
+              
+              <NavLink to={`${page}`} style={{ textDecoration: 'none' }} key={page}>
+                <Button                
+                  // onClick={handleCloseNavMenu}
+                  sx={{ my: 2, color: 'black', display: 'block'}}
+                  variant='contained'
+                  color='warning'
+                >
+                  {page}
+                </Button>
+              </NavLink>
+              ))}
             {!isLoggedIn && isNotLoggedInPages.map((page) => (
-              <Button
-                key={page}
-                // onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: 'white', display: 'block' }}
-              >
-                <Link to={`${page}`}>{page}</Link>
-              </Button>
+              <NavLink to={`${page}`} style={{ textDecoration: 'none'}} key={page}>
+                <Button
+                  
+                  // onClick={handleCloseNavMenu}
+                  sx={{ my: 2, color: 'black', display: 'block' }}
+                >
+                  {page}
+                </Button>
+              </NavLink>
             ))}
           </Box>
 
@@ -120,7 +118,11 @@ const Navbar = () => {
             >
               {settings.map((setting) => (
                 <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center"><Link to={`${setting}`}>{setting}</Link></Typography>
+                  <NavLink to={`${setting}`} style={{ textDecoration: 'none'}} key={setting}>
+                    <Button sx={{ my: 1, color: '#BA2B04', display: 'block' }}>
+                      {setting}
+                    </Button>
+                  </NavLink>
                 </MenuItem>
               ))}
             </Menu>

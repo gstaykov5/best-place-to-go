@@ -3,6 +3,7 @@
     {
       "fullname": "Georgi",
       "username": "gstaykov",
+      "avatar": "https://thumbs.dreamstime.com/z/laughing-out-loud-emoticon-laughing-out-loud-emoticon-stone-face-white-wood-background-free-space-your-text-117511157.jpg",
       "email": "asd@abv.bg",
       "password": "!1qwertQQQQ",
       "confirmPassword": "!1qwertQQQQ",
@@ -15,9 +16,18 @@
       "email": "gogo@gmail.com",
       "password": "!1qwertQQQQ",
       "confirmPassword": "!1qwertQQQQ",
-      "role":"admin",
+      "role": "admin",
       "acceptTerms": true,
       "id": 2
+    },
+    {
+      "fullname": "Georgi Staykov",
+      "username": "Georgi",
+      "email": "gigi@gmail.com",
+      "password": "!1qwertQQQQ",
+      "confirmPassword": "!1qwertQQQQ",
+      "acceptTerms": true,
+      "id": 3
     }
   ],
   "posts": [],

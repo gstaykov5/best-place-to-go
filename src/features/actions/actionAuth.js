@@ -1,6 +1,7 @@
 import {
     REGISTER_FAIL,
     REGISTER_SUCCESS,
+    UPDATE_USER,
     LOGIN_SUCCESS,
     LOGIN_FAIL,
     LOGOUT,
@@ -42,13 +43,16 @@ export const registration = (data) => dispatch => {
 }
 
 export const login = (email, password) => async dispatch => {
-    const data = await authService.login()
+    const data = await authService.login();
     const loggedUser = await data.filter(user => user.email === email && user.password === password);
     
     if (loggedUser.length === 0) {
         dispatch({
             type: SET_MESSAGE,
             payload: 'Email or password is incorrect'
+        })
+        dispatch({
+            type: LOGIN_FAIL,
         })
         
         return;
@@ -65,6 +69,15 @@ export const login = (email, password) => async dispatch => {
     })
 
     return loggedUser;
+}
+
+export const update = (data, id) => async dispatch => {
+    const user = await authService.update(data, id);
+    dispatch({
+        type: UPDATE_USER,
+        payload: { user }
+    })
+    localStorage.setItem('user', JSON.stringify(user));
 }
 
 export const logout = () => dispatch => {

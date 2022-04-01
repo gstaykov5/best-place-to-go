@@ -10,10 +10,14 @@ import Home from './components/pages/home/Home';
 import Login from './components/pages/login/Login';
 import Logout from './components/pages/logout/Logout';
 import Meetup from './components/pages/meet-up/Meetup';
-import Register from './components/pages/register/Register'
+import Register from './components/pages/register/Register';
+import Account from './components/pages/account/left-side-content/Account';
+import ControlUsers from './components/pages/control-users/ControlUsers';
+import WhereHaveYouBeen from './components/pages/add-new-place/WhereHaveYouBeen';
+import Profile from './components/pages/profile/Profile';
+
 // import { useSelector } from 'react-redux';
 import store from './features/store/store'
-import WhereHaveYouBeen from './components/pages/add-new-place.js/WhereHaveYouBeen';
 
 function App() {
   // const { isLoggedIn } = useSelector(state => state.registeLoginReducer);
@@ -29,8 +33,11 @@ function App() {
         <Route path="/BestPlaceToGo" element={<BestPlaceToGo />} />
         <Route path="/Meetup" element={<Meetup />} />
         <Route path="/WhereHaveYouBeen" element={<WhereHaveYouBeen />} />
-        <Route path="/Login" element={<Login />} />
         <Route path="/Favorite" element={<Favorite />} />
+        <Route path='/Account' element={<Account />} />
+        <Route path='/Profile' element={<Profile />} />
+        <Route path='/ControlUsers' element={<ControlUsers />} />
+        <Route path="/Login" element={<Login />} />
         <Route path="/Register" element={<Register />} />
         <Route path="/Logout" element={<Logout />} />
       </Routes>
