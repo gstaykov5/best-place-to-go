@@ -6,18 +6,18 @@ const Profile = () => {
   return (
     <Box>
       <Grid container>
-        <Grid item xs={6} style={{border: '1px solid black'}}>
+        <Grid item xs={12} style={{border: '1px solid black'}}>
           <Typography>2121</Typography>
         </Grid>
-        <Grid item xs={6}style={{border: '1px solid black'}}>
-          <Typography>2121</Typography>
-
-        </Grid>
-        <Grid item xs={6}style={{border: '1px solid black'}}>
+        <Grid item xs={12}style={{border: '1px solid black'}}>
           <Typography>2121</Typography>
 
         </Grid>
-        <Grid item xs={6}style={{border: '1px solid black'}}>
+        <Grid item xs={12}style={{border: '1px solid black'}}>
+          <Typography>2121</Typography>
+
+        </Grid>
+        <Grid item xs={12}style={{border: '1px solid black'}}>
           <Typography>2121</Typography>
 
         </Grid>

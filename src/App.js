@@ -18,6 +18,7 @@ import Profile from './components/pages/profile/Profile';
 
 // import { useSelector } from 'react-redux';
 import store from './features/store/store'
+import Details from './components/pages/details/Details';
 
 function App() {
   // const { isLoggedIn } = useSelector(state => state.registeLoginReducer);
@@ -36,6 +37,7 @@ function App() {
         <Route path="/Favorite" element={<Favorite />} />
         <Route path='/Account' element={<Account />} />
         <Route path='/Profile' element={<Profile />} />
+        <Route path='/Details/:id' element={<Details />} />
         <Route path='/ControlUsers' element={<ControlUsers />} />
         <Route path="/Login" element={<Login />} />
         <Route path="/Register" element={<Register />} />

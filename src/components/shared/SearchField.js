@@ -48,7 +48,8 @@ const Search = styled('div')(({ theme }) => ({
   
 const SearchField = props => {
   return (
-    <Search sx={{marginRight: 2,  }}>
+    <Search sx={{ marginRight: 2 }} 
+    style={{width: '70%'}}>
       <SearchIconWrapper>
         <SearchIcon />
       </SearchIconWrapper>

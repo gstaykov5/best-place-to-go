@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
-import { useForm, Controller } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 
 import { Box, Button, Grid, Paper, TextField, Typography } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import ScheduleSendIcon from '@mui/icons-material/ScheduleSend';
 import RemoveIcon from '@mui/icons-material/Remove';
-import styled from '@emotion/styled';
 
 import validationWhereHaveYouBeenSchema from './validationWhereHaveYouBeenSchema';
+import StaticDatePicker from './DatePicker';
+import { useDispatch, useSelector } from 'react-redux';
+import { place } from '../../../features/actions/actionPlace';
 
 // const Item = styled(Paper)(({ theme }) => ({
 //   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -20,6 +22,12 @@ import validationWhereHaveYouBeenSchema from './validationWhereHaveYouBeenSchema
 
 function WhereHaveYouBeen() {
   const [imageField, setImageField] = useState([{image: ''}]);
+  const [date, changeDate] = useState(new Date().toDateString());
+  const [newPlace, setNewPlace] = useState({});
+  const [area, setArea] = useState('');
+  const dispatch = useDispatch();
+  const { user } = useSelector(state => state.registeLoginReducer);
+  console.log(user)
 
   const { register, control, handleSubmit, formState: { errors } } = useForm({
     resolver: yupResolver(validationWhereHaveYouBeenSchema)
@@ -35,21 +43,19 @@ function WhereHaveYouBeen() {
   };
 
   const handleInputChange = e => {
-    console.log(e)
     const { name, value } = e.target;
-    console.log(name)
-    console.log(imageField.length)
+    const imageHelper = [...imageField];
     const i = imageField.length - 1;
-    // const list = {image:};
-
-
-    setImageField([...imageField, imageField[i].image = value]);
-    console.log(imageField)
+    imageHelper[i][name] = value;
+    setImageField(imageHelper);
   };
+
   console.log(imageField)
 
   const onSubmit = data => {
-    console.log(imageField)
+    setNewPlace({ ...data, date: date, area: area, image: imageField, authorID: user.id });
+    dispatch(place(newPlace));
+    console.log('new place:',newPlace);
     console.log(JSON.stringify(data, null, 2));
   }
 
@@ -70,8 +76,8 @@ function WhereHaveYouBeen() {
               {...register('country')}
               error={errors.country ? true : false}
               >
-              <Typography variant="inherit" color="textSecondary">{errors.country?.message}</Typography>
             </TextField>
+              <Typography variant="inherit" color="textSecondary">{errors.country?.message}</Typography>
           </Grid>
 
           <Grid item xs={12} lg={12}>
@@ -87,8 +93,8 @@ function WhereHaveYouBeen() {
               {...register('city')}
               error={errors.country ? true : false}
               >
-              <Typography variant="inherit" color="textSecondary">{errors.city?.message}</Typography>
             </TextField>
+              <Typography variant="inherit" color="textSecondary">{errors.city?.message}</Typography>
           </Grid>
 
           <Grid item xs={12} lg={12}>
@@ -101,10 +107,8 @@ function WhereHaveYouBeen() {
               label='Area'
               fullWidth
               margin='none'
-              {...register('area')}
-              error={errors.are ? true : false}
+              onChange={e => {setArea(e.target.value)}}
               >
-              <Typography variant="inherit" color="textSecondary">{errors.area?.message}</Typography>
             </TextField>
           </Grid>
 
@@ -121,8 +125,12 @@ function WhereHaveYouBeen() {
               {...register('description')}
               error={errors.description ? true : false}
               >
-              <Typography variant="inherit" color="textSecondary">{errors.description?.message}</Typography>
             </TextField>
+              <Typography variant="inherit" color="textSecondary">{errors.description?.message}</Typography>
+          </Grid>
+
+          <Grid item xs={12} lg={12}>
+            <StaticDatePicker />
           </Grid>
 
           <Grid item xs={12} lg={12} mb={10} onChange={handleInputChange}>
@@ -136,14 +144,15 @@ function WhereHaveYouBeen() {
                 id='image'
                 name='image'
                 label='Image'
+                value={img.image}
                 fullWidth
                 // value={img.image}
                 {...register('image')}
                 error={errors.image ? true : false}
                 >
-              <Typography variant="inherit" color="textSecondary">{errors.image?.message}</Typography>
             </TextField>
             )})}
+            <Typography variant="inherit" color="textSecondary">{errors.image?.message}</Typography>
             
               <Button color='primary' variant='contained' onClick={handleAddImageField}>
                 Add new image field<AddIcon/>
@@ -161,4 +170,4 @@ function WhereHaveYouBeen() {
   )
 }
 
-export default WhereHaveYouBeen
+export default WhereHaveYouBeen;

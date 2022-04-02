@@ -7,6 +7,7 @@ import { Grid, IconButton, ImageList, ImageListItem, ImageListItemBar, Typograph
 import InfoIcon from '@mui/icons-material/Info';
 import FavoriteBorderSharpIcon from '@mui/icons-material/FavoriteBorderSharp';
 import FavoriteSharpIcon from '@mui/icons-material/FavoriteSharp';
+import { Link } from 'react-router-dom';
 
 const Alert = forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -76,7 +77,7 @@ const BestPlaceToGo = props => {
                   sx={{ color: 'rgba(255, 255, 255, 0.54)' }}
                   aria-label={`info about ${item.title}`}
                 >
-                  <InfoIcon />
+                  <Link to={`/details/${item.id}`}><InfoIcon /></Link>
                 </IconButton>
               }
             />
