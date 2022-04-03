@@ -1,13 +1,14 @@
 import React, { forwardRef, useEffect, useState } from 'react'
+import { Link } from 'react-router-dom';
 
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 import MuiAlert from '@mui/material/Alert';
 import { Grid, IconButton, ImageList, ImageListItem, ImageListItemBar, Typography, Snackbar, Stack } from '@mui/material';
 import InfoIcon from '@mui/icons-material/Info';
 import FavoriteBorderSharpIcon from '@mui/icons-material/FavoriteBorderSharp';
-import FavoriteSharpIcon from '@mui/icons-material/FavoriteSharp';
-import { Link } from 'react-router-dom';
+// import FavoriteSharpIcon from '@mui/icons-material/FavoriteSharp';
+// import {getPlaces} from '../../../features/actions/actionPlace'
 
 const Alert = forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -15,13 +16,17 @@ const Alert = forwardRef(function Alert(props, ref) {
 
 const BestPlaceToGo = props => {
   const [openSnackBar, setOpenSnackBar] = useState(false);
-  // const  { isLoggedIn }  = useSelector(state => state.registeLoginReducer);
+  const  { places }  = useSelector(state => state.placesReducer);
   const  { message } = useSelector(state => state.messageReducer);
+  // const dispatch = useDispatch()
+  // dispatch(getPlaces());
+// console.log(places)
 
+  
   useEffect(() => {
     setOpenSnackBar(true);
   }, []);
-
+  
   const handleClose = (event, reason) => {
     if (reason === 'clickaway') {
       return;
@@ -40,12 +45,12 @@ const BestPlaceToGo = props => {
       justify="center"
     >
       <ImageList sx={{ width: 1000 }}>
-        {itemData.map((item) => (
-          <ImageListItem key={item.img}>
+        {places && places.map((place) => (
+          <ImageListItem key={place.id}>
             <img
-              src={`${item.img}?w=248&fit=crop&auto=format`}
-              srcSet={`${item.img}?w=248&fit=crop&auto=format&dpr=2 2x`}
-              alt={item.title}
+              src={`${place.images[0].image}?w=248&fit=crop&auto=format`}
+              // srcSet={`${places.images}?w=248&fit=crop&auto=format&dpr=2 2x`}
+              alt={place.country}
               loading="lazy"
             />
 
@@ -55,7 +60,7 @@ const BestPlaceToGo = props => {
                   'linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, ' +
                   'rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)',
               }}
-              title={item.title}
+              title={place.country}
               position="top"
               actionIcon={
                 <IconButton
@@ -70,14 +75,14 @@ const BestPlaceToGo = props => {
             />
 
             <ImageListItemBar
-              title={item.title}
-              subtitle={item.author}
+              title={place.country}
+              subtitle={place.id}
               actionIcon={
                 <IconButton
                   sx={{ color: 'rgba(255, 255, 255, 0.54)' }}
-                  aria-label={`info about ${item.title}`}
+                  aria-label={`info about ${place.country}`}
                 >
-                  <Link to={`/details/${item.id}`}><InfoIcon /></Link>
+                  <Link to={`/details/${place.id}`}><InfoIcon /></Link>
                 </IconButton>
               }
             />

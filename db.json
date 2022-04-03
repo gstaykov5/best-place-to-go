@@ -30,14 +30,14 @@
       "id": 3
     }
   ],
-  "posts": [
+  "places": [
     {
       "country": "Canada",
       "city": "Torronto",
       "description": "Awesome place. Must be visited  ",
-      "image": [
+      "images": [
         {
-          "image": "https://media.istockphoto.com/photos/toronto-skyline-with-purple-light-toronto-ontario-canada-picture-id626545182?k=20&m=626545182&s=612x612&w=0&h=nOiN-pF55ZpozsCYkp_KbwPBapdi1FKqKqRCBdunn5s="
+          "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR67fiwFJQongCOxgFaR_mPKxQYgix1JHeN9A&usqp=CAU.jpg"
         },
         {
           "image": "https://cdn.pixabay.com/photo/2016/04/01/00/08/toronto-1298016__340.jpg"
@@ -49,7 +49,27 @@
       "date": "Sun Apr 03 2022",
       "area": "",
       "authorID": 2,
-      "id": 3
+      "id": 2
+    },
+    {
+      "country": "Canada",
+      "city": "Torronto",
+      "description": "Awesome place. Must be visited  ",
+      "images": [
+        {
+          "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR67fiwFJQongCOxgFaR_mPKxQYgix1JHeN9A&usqp=CAU.jpg"
+        },
+        {
+          "image": "https://cdn.pixabay.com/photo/2016/04/01/00/08/toronto-1298016__340.jpg"
+        },
+        {
+          "image": "https://www.mmtravel.bg/files/images/products/s_toronto-MMTravel.bg_1538243109.jpg"
+        }
+      ],
+      "date": "Sun Apr 03 2022",
+      "area": "",
+      "authorID": 2,
+      "id": 1
     }
   ],
   "recipe": []

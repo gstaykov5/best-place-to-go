@@ -1,35 +1,62 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 import { Box, Typography } from '@material-ui/core';
-import { Button, Grid, ImageList, ImageListItem } from '@mui/material';
+import { Button, Grid, ImageList, ImageListItem, TextField } from '@mui/material';
 import FollowTheSignsIcon from '@mui/icons-material/FollowTheSigns';
+import SendIcon from '@mui/icons-material/Send';
+import EditIcon from '@mui/icons-material/Edit';
 
-function Details() {
+const Details = () => {
+  // const [placeDetails, setPlaceDetails] = useState();
+  const { id } = useParams();
+  const { places } = useSelector(state => state.placesReducer);
+
+  // const placeDetails = places.filter(pl => (pl.id === +id))
+  // useEffect(() => {
+  //   setPlaceDetails([...places.filter(pl => (pl.id === +id))]);
+  // }, [id])
+
   return (
     <div>
         <Box sx={{flexGrow: 1}}>
-            <Grid container style={{marginTop: '100px', justifyContent: 'center'}}>
+            <Grid container xs={12} style={{marginTop: '100px', marginLeft: '20px', justifyContent: 'center'}}>
                 <Grid item lg={4} md={6} xs={12}>
                     <Box sx={{ width: 500, height: 450, overflowY: 'scroll' }}>
-                        <ImageList variant="masonry" cols={3} gap={8}>
-                            {itemData.map((item) => (
-                                <ImageListItem key={item.img}>
+                        <ImageList variant="masonry" cols={3} gap={8} >
+                            {places.filter(pl => (pl.id === +id))[0].images.map((item) => (
+                                <ImageListItem key={item.image} >
                                     <img
-                                        src={`${item.img}?w=248&fit=crop&auto=format`}
-                                        srcSet={`${item.img}?w=248&fit=crop&auto=format&dpr=2 2x`}
-                                        alt={item.title}
-                                        loading="lazy"
+                                      src={`${item.image}?w=248&fit=crop&auto=format`}
+                                      srcSet={`${item.image}?w=248&fit=crop&auto=format&dpr=2 2x`}
+                                      alt={item.country}
+                                      loading="lazy"
                                     />
                                 </ImageListItem>
                             ))}
                         </ImageList>
                     </Box>
                 </Grid>
-                <Grid item lg={6} md={6} xs={12} style={{border: '1px solid black'}}>
-                    <Typography variant="h4" style={{ marginTop: '30px',  marginBottom: '20px' }}>Canada</Typography>
-                    <Typography variant="h5" style={{ marginBottom: '20px' }}>Toronto</Typography>
-                    <Typography variant="h5" >djksahlsdajflj sadkj kjsahgkljsha skdljgh sdn sajhgk hsakjghlksjadhg  jakshgkahskgjh  akjshgkhsa</Typography>
-                </Grid>
+
+                {places.filter(pl => (pl.id === +id)).map(item => (
+                  <Grid container lg={6} md={6} xs={12} >
+                    <Grid item>
+                      <Typography variant="h4" style={{ marginTop: '30px',  marginBottom: '20px' }}>{item.country}</Typography>
+                      <Typography variant="h5" style={{ marginBottom: '20px' }}>{item.city}</Typography>
+                      <Typography variant="h5" >{item.description}</Typography>
+                    </Grid>
+
+                    <Grid item lg={12} sx={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'flex-end', p: 1, m: 1, }}>
+                      <Button sx={{ height: '57px' }} size='large' variant="outlined" endIcon={<EditIcon />}>Edit</Button>
+                    </Grid> 
+
+                    <Grid item lg={12} sx={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'flex-end', p: 1, m: 1, }}>
+                      <TextField fullWidth variant='outlined' label='Comment' color="warning" focused />
+                      <Button size='large' variant="outlined" sx={{ width: '35%', ml: 5, height: '57px' }} endIcon={<SendIcon />}>Add comment</Button>
+                    </Grid>
+                  </Grid>
+                ))}
 
                 <Grid item lg={8} md={6} xs={12} style={{marginTop: '100px', marginBottom: '70px'}}>
                     <Typography variant="h4">Comments</Typography>
@@ -38,8 +65,8 @@ function Details() {
                 <Grid item lg={8} md={8} xs={10} style={{ marginBottom: '50px', borderBottom: '1px solid black'}}>
                     <Typography variant="body1" align='left' ><FollowTheSignsIcon fontSize="small" />This is for username</Typography>
                     <Typography variant="body1" align='left' >leave some comment here </Typography>
-                    <Button size='small' style={{ bottom: '0', right: '45%'}}>Delete</Button>
-                    <Button size='small' style={{ bottom: '0', right: '45%'}}>Edit</Button>
+                    <Button size='small'>Delete</Button>
+                    <Button size='small'>Edit</Button>
                 </Grid>
                 <Grid item lg={8} md={6} xs={12} style={{ marginBottom: '50px', borderBottom: '1px solid black' }}>
                     <Typography variant="body1" align='left' ><FollowTheSignsIcon fontSize="small" />This is for username</Typography>
@@ -54,7 +81,7 @@ function Details() {
                     <Typography variant="body1" align='left' >leave some comment here </Typography>
                 </Grid>
             </Grid>
-        </Box>
+          </Box>
     </div>
   )
 }

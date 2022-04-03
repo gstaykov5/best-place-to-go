@@ -53,7 +53,7 @@ function WhereHaveYouBeen() {
   console.log(imageField)
 
   const onSubmit = data => {
-    setNewPlace({ ...data, date: date, area: area, image: imageField, authorID: user.id });
+    setNewPlace({ ...data, date: date, area: area, images: imageField, authorID: user.id });
     dispatch(place(newPlace));
     console.log('new place:',newPlace);
     console.log(JSON.stringify(data, null, 2));

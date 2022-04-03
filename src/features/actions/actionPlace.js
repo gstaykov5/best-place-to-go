@@ -1,7 +1,7 @@
 import placeService from '../../services/place.service';
-import { NEW_PLACE_FAIL, NEW_PLACE_SUCCESS, SET_MESSAGE } from './type';
+import { NEW_PLACE_FAIL, NEW_PLACE_SUCCESS, GET_ALL_PLACES, SET_MESSAGE } from './type';
 
-export const place = data => dispatch => {
+export const place = data => async dispatch => {
     return placeService.postPlace(data)
         .then(() => {
             dispatch({
@@ -21,5 +21,12 @@ export const place = data => dispatch => {
                 payload: 'You dont create new post',
             });
         })
+}
 
+export const getPlaces = () => async dispatch => {
+    const places = await placeService.getAllPlaces();
+        dispatch({
+            type: GET_ALL_PLACES,
+            payload: places
+        })
 }
