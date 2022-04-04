@@ -72,5 +72,29 @@
       "id": 1
     }
   ],
-  "recipe": []
+  "comments": [
+    {
+      "id": 1
+    },
+    {
+      "comments": [
+        {
+          "comment": "saddas",
+          "authorId": 2
+        }
+      ],
+      "placeId": "2",
+      "id": 2
+    },
+    {
+      "comments": [
+        {
+          "comment": "asd",
+          "authorId": 2
+        }
+      ],
+      "placeId": "2",
+      "id": 3
+    }
+  ]
 }

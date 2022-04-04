@@ -11,3 +11,6 @@ export const GET_ALL_PLACES = 'GET_ALL_PLACES';
 
 export const SET_MESSAGE = "SET_MESSAGE";
 export const CLEAR_MESSAGE = "CLEAR_MESSAGE";
+
+export const NEW_COMMENT = 'NEW_COMMENT';
+export const DELETE_COMMENT = 'DELETE_COMMENT';
