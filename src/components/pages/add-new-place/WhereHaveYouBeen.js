@@ -22,7 +22,7 @@ import { place } from '../../../features/actions/actionPlace';
 
 function WhereHaveYouBeen() {
   const [imageField, setImageField] = useState([{image: ''}]);
-  const [date, changeDate] = useState(new Date().toDateString());
+  const [date, changeDate] = useState(new Date().toLocaleString());
   const [newPlace, setNewPlace] = useState({});
   const [area, setArea] = useState('');
   const dispatch = useDispatch();

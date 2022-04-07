@@ -47,8 +47,9 @@ const Login = props => {
   const handleLogin = (e) => {
     e.preventDefault();
     
-    dispatch(login(email, password))
-      if (!isLoggedIn) {
+    dispatch(login(email, password));
+
+      if (isLoggedIn) {
         setOpenSnackBar(true);
       } else {
         setOpenSnackBar(true);

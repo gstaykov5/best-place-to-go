@@ -17,21 +17,16 @@ import Details from './components/pages/details/Details';
 
 import store from './features/store/store'
 import { getAllPlaces } from './features/actions/actionPlace';
-import { allComments } from './features/actions/actionComments';
 import { useDispatch } from 'react-redux';
-import { useSelector } from 'react-redux';
 
 function App() {
   const dispatch = useDispatch();
-  // const { isLoggedIn } = useSelector(state => state.registeLoginReducer);
-  // console.log('isLoggedIn from App.js:',isLoggedIn);
-
-  const a = store.getState()
   
   dispatch(getAllPlaces());
-  dispatch(allComments());
   
-  console.log(a)
+  const a = store.getState()
+  
+  console.log('this is first', a)
   // yarn add cors indicative mongodb jsonwebtoken bcryptjs morgan
   return (
     <div className="App">

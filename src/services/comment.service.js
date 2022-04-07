@@ -8,36 +8,31 @@ const newComment = async (comment) => {
             'Content-Type': 'application/json'
         }
     });
-    const res = req.json();
+    const res = await req.json();
 
     return res;
 }
 
 const getAllComments = async () => {
     const req = await fetch(`${API_URL}/placesComments/comment`);
-    const res = req.json();
+    const res = await req.json();
 
     return res;
 }
 
-const pushNewComment = async (comment, id) => {
+const deleteComment = async (id) => {
     const req = await fetch(`${API_URL}/placesComments/comment/${id}`, {
-        method: 'POST',
-        body: JSON.stringify(comment),
-        headers: {
-            'Content-Type': 'application/json'
-        }
+        method: 'DELETE',
     });
-    const res = req.json();
+    const res = await req.json();
 
     return res;
 }
-
 
 const commentsService = {
     newComment,
     getAllComments,
-    pushNewComment,
+    deleteComment
 }
 
 export default commentsService;

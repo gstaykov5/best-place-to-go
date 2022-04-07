@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import produce from "immer"
@@ -9,62 +9,37 @@ import FollowTheSignsIcon from '@mui/icons-material/FollowTheSigns';
 import SendIcon from '@mui/icons-material/Send';
 import EditIcon from '@mui/icons-material/Edit';
 
-import { newComment, pushComment } from '../../../features/actions/actionComments';
+import { allComments, deleteComment, newComment } from '../../../features/actions/actionComments';
 import store from '../../../features/store/store';
 
 const Details = () => {
-  const { id } = useParams();
+  const inputRef = useRef();
   const dispatch = useDispatch();
+  const { id } = useParams();
   const { places } = useSelector(state => state.placesReducer);
   const { user } = useSelector(state => state.registeLoginReducer);
-  const  { comments }  = useSelector(state => state.commentReducer);
-  const [comment, setComment] = useState({ placeId: id, comments: [{comment: '', authorId: user.id, username: user.username}]});
-  // const [comment, setComment] = useState({ placeId: id, comments: [{comment: '', authorId: user.id}]});
-  const [updateComments, setUpdateComments] = useState({});
+  const { comments }  = useSelector(state => state.commentReducer);
+  const [comment, setComment] = useState({ placeId: id, comment: '', authorId: user.id, username: user.username, date: new Date().toLocaleString()});
 
-  console.log(store.getState())
-  useEffect(() => {
-  }, [])
+  dispatch(allComments(id))
 
-  // console.log(comments.comments)
-  // console.log(comment.comments[0].comment)
-  
   const handleComment = (e) => {
-      const com = e.target.value;
-      const immerComment = produce(comment, draft => {
-        draft.comments[0].comment = com;
-      });
-      setComment(immerComment);
-    }
-    
-    const sendComment = () => {
-      const existingPlaceComments = comments.comment.find(e => e.placeId === id);
-      console.log(existingPlaceComments._id)
-      console.log(comments)
+    const com = e.target.value;
+    const immerComment = produce(comment, draft => {
+      draft.comment = com;
+    });
+    setComment(immerComment);
+  }
 
-      if (existingPlaceComments) {
-        // const immerComment = produce(existingPlaceComments.comments, draft => {
-        //   draft.push(comment.comments[0]);
-        // })
-
-        setUpdateComments({comments: produce(existingPlaceComments.comments, draft => {
-          draft.push(comment.comments[0]);
-        })})
-
-        console.log(updateComments)
-        // console.log(immerComment)
-        console.log(existingPlaceComments._id)
-        console.log(comments)
-
-        dispatch(pushComment(updateComments, existingPlaceComments._id));
-      } else {
-
-        // dispatch(newComment([comment], user.id));
-      }
-
-
-
-    console.log([comment])
+  const handleDeleteComment = (commentId) => {
+    dispatch(deleteComment(commentId));
+    console.log(commentId)
+  }
+  
+  const sendComment = () => {
+    dispatch(newComment(comment));
+    inputRef.current.value = '';
+    console.log(comment)
   }
 
   return (
@@ -73,10 +48,10 @@ const Details = () => {
             <Grid container style={{marginTop: '100px', justifyContent: 'center'}}>
                 <Grid item lg={4} md={6} xs={12} sx={{ml: 10}} >
                   <Box sx={{ width: 500, height: 450, overflowY: 'scroll' }}>
-                      {places.filter(pl => (pl._id === id)).map((item) => (
-                        <ImageList variant="masonry" cols={3} gap={8} >
+                      {places?.filter(pl => (pl._id === id)).map((item) => (
+                        <ImageList key={item._id} variant="masonry" cols={3} gap={8} >
                           {item.images.map((img) => (
-                            <ImageListItem key={img.image} >
+                            <ImageListItem key={img._id} >
                               <img
                                 src={`${img.image}?w=248&fit=crop&auto=format`}
                                 srcSet={`${img.image}?w=248&fit=crop&auto=format&dpr=2 2x`}
@@ -91,7 +66,7 @@ const Details = () => {
                 </Grid>
 
                 <Grid item lg={6} md={6} xs={12} style={{boxShadow: '10px 10px 10px 5px grey'}}>
-                  {places.filter(pl => pl._id === id).map(item => (
+                  {places?.filter(pl => pl._id === id).map(item => (
                     <Box key={item.id}>
                       <Grid item sx={{ml: 10}} >
                         <Typography variant="h4" style={{ marginTop: '30px',  marginBottom: '50px' }}>{item.country}</Typography>
@@ -106,7 +81,14 @@ const Details = () => {
                       </Grid> 
 
                       <Grid item lg={12} sx={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'flex-end', p: 1, m: 1, }}>
-                        <TextField fullWidth variant='outlined' label='Comment' color="warning" focused onChange={handleComment} />
+                        <TextField
+                          fullWidth
+                          variant='outlined'
+                          label='Comment'
+                          color="warning"
+                          ref={inputRef}
+                          focused onChange={handleComment}
+                        />
                         <Button 
                           size='large' 
                           variant="outlined" 
@@ -125,12 +107,29 @@ const Details = () => {
                     <Typography variant="h4">Comments</Typography>
                 </Grid>
 
-                <Grid item lg={8} md={8} xs={10} style={{ marginBottom: '50px', borderBottom: '1px solid black'}}>
-                    <Typography variant="body1" align='left' ><FollowTheSignsIcon fontSize="small" />This is for username</Typography>
-                    <Typography variant="body1" align='left' >leave some comment here </Typography>
-                    <Button size='small'>Delete</Button>
-                    <Button size='small'>Edit</Button>
-                </Grid>
+                  {comments?.map(comment => (
+                    <Grid item
+                      key={comment._id}
+                      lg={8} md={8} xs={10} 
+                      style={{ marginBottom: '50px', 
+                      borderBottom: '1px solid black'
+                    }}>
+                      <Typography variant="body1" align='left' >
+                        <FollowTheSignsIcon fontSize="small" />
+                          {comment.username}
+                        </Typography>
+                        <Typography variant="body1" align='left' >
+                          {comment.comment}
+                        </Typography>
+                        <Typography variant="body1" align='right' >
+                          {comment.date}
+                        </Typography>
+                        <Button size='small' onClick={() => handleDeleteComment(comment._id)}>
+                          Delete
+                      </Button>
+                      {comment.authorId === user.id && <Button size='small'>Edit</Button>}
+                    </Grid>
+                  ))}
             </Grid>
           </Box>
     </div>

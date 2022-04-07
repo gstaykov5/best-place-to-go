@@ -39,7 +39,8 @@ export const registration = (data) => async dispatch => {
 
 export const login = (email, password) => async dispatch => {
     const user = await authService.login(email, password);
-
+console.log(user)
+console.log({user})
     if(!user.username){
         dispatch({
             type: SET_MESSAGE,

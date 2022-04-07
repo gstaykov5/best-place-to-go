@@ -15,4 +15,4 @@ export const CLEAR_MESSAGE = 'CLEAR_MESSAGE';
 
 export const NEW_COMMENT = 'NEW_COMMENT';
 export const DELETE_COMMENT = 'DELETE_COMMENT';
-export const All_COMMENTS = 'All_COMMENTS';
+export const ALL_COMMENTS = 'ALL_COMMENTS';

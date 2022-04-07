@@ -1,51 +1,40 @@
-import React, { forwardRef, useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
-import MuiAlert from '@mui/material/Alert';
-import { Grid, IconButton, ImageList, ImageListItem, ImageListItemBar, Snackbar, Stack } from '@mui/material';
+
+import { Grid, IconButton, ImageList, ImageListItem, ImageListItemBar } from '@mui/material';
 import InfoIcon from '@mui/icons-material/Info';
 import FavoriteBorderSharpIcon from '@mui/icons-material/FavoriteBorderSharp';
-// import { getAllPlaces } from '../../../features/actions/actionPlace';
-// import FavoriteSharpIcon from '@mui/icons-material/FavoriteSharp';
-// import {getPlaces} from '../../../features/actions/actionPlace'
+import FavoriteRoundedIcon from '@mui/icons-material/FavoriteRounded';
 
 import { update } from '../../../features/actions/actionAuth';
-
-const Alert = forwardRef(function Alert(props, ref) {
-  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
-});
+import { allComments } from '../../../features/actions/actionComments';
 
 const BestPlaceToGo = props => {
   const dispatch = useDispatch();
-  const [openSnackBar, setOpenSnackBar] = useState(false);
-  const [favorite, setFavorite] = useState([]);
   const { places }  = useSelector(state => state.placesReducer);
-  const { message } = useSelector(state => state.messageReducer);
   const { user } = useSelector(state => state.registeLoginReducer);
-  
-  console.log(places);
-  // dispatch(getAllPlaces());
-  // setPlace(places);
+  const [favorites, setFavorite] = useState([]);
 
-  useEffect(() => {
-    setOpenSnackBar(true);
-  }, []);
+  
+  // console.log(favorites);
+
 
   const handleFavorite = (id) => {
-    setFavorite([...favorite, id]);
-    console.log('id', id)
-    console.log(favorite)
-    dispatch(update(favorite));
-  }
-  
-  const handleClose = (event, reason) => {
-    if (reason === 'clickaway') {
-      return;
+    if (!favorites.includes(id)) {
+      setFavorite(prev => [prev, user.favorite]);
+      setFavorite(prev => [prev, id]);
+      console.log(user.favorites)
+      console.log(favorites)
+      // dispatch(update(favorites, user.id));
     }
+    console.log('id', id)
+  }
 
-    setOpenSnackBar(false);
-  };
+  const handleComments = (placeId) => {
+    dispatch(allComments(placeId));
+  }
 
   return (
     <Grid
@@ -57,8 +46,8 @@ const BestPlaceToGo = props => {
       justify="center"
     >
       <ImageList sx={{ width: 1000 }}>
-        {places.map((place) => (
-          <ImageListItem key={place.id}>
+        {places?.map((place) => (
+          <ImageListItem key={place._id}>
             <img
               src={`${place.images[0].image}?w=248&fit=crop&auto=format`}
               // srcSet={`${places.images}?w=248&fit=crop&auto=format&dpr=2 2x`}
@@ -77,10 +66,11 @@ const BestPlaceToGo = props => {
               actionIcon={
                 <IconButton
                   sx={{ color: 'pink' }}
+                  onClick={() => handleFavorite(place._id)} 
                   // aria-label={`star ${item.title}`}
                 >
-                  <FavoriteBorderSharpIcon onClick={() => handleFavorite(place._id)} />
-                  {/* <FavoriteSharpIcon /> */}
+                  {!user.favorites.includes(place._id) ? <FavoriteBorderSharpIcon /> :
+                  <FavoriteRoundedIcon />}
                 </IconButton>
               }
               actionPosition="left"
@@ -93,6 +83,7 @@ const BestPlaceToGo = props => {
                 <IconButton
                   sx={{ color: 'rgba(255, 255, 255, 0.54)' }}
                   aria-label={`info about ${place.country}`}
+                  onClick={() => handleComments(place._id)}
                 >
                   <Link to={`/details/${place._id}`}><InfoIcon /></Link>
                 </IconButton>
@@ -101,14 +92,6 @@ const BestPlaceToGo = props => {
           </ImageListItem>
         ))}
       </ImageList>
-
-      <Stack spacing={2} sx={{ width: '100%' }}>
-        <Snackbar open={openSnackBar} autoHideDuration={6000} onClose={handleClose}>
-          <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
-            {message}
-          </Alert>
-        </Snackbar>
-      </Stack>
     </Grid>
   )
 }

@@ -25,7 +25,7 @@ const Register = () => {
     data.favorites = [];
     data.avatar = '';
     data.registrationDate = new Date().toDateString();
-    // console.log(JSON.stringify(data, null, 2));
+    
     dispatch(registration(data));
     navigate('/Home', {replace: true});
   };
