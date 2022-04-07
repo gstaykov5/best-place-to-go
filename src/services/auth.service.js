@@ -1,40 +1,46 @@
-const API_URL = "http://localhost:8080/api";
+const API_URL = "http://localhost:5000";
 
 const register = async (data) => {
-    const postNewUser = await fetch(`${API_URL}/users`, {
+    const req = await fetch(`${API_URL}/users/register`, {
         method: 'POST',
         body: JSON.stringify(data),
         headers: {
             'Content-Type': 'application/json'
         }
     });
-    const res = await postNewUser.json();
-    
+    const res = await req.json();
+
     return res;
 };
 
 const update = async (data, id) => {
-    const updateUser = await fetch(`${API_URL}/users/${id}`, {
-        method: 'PUT',
+    const req = await fetch(`${API_URL}/users/edit/${id}`, {
+        method: 'POST',
         body: JSON.stringify(data),
         headers: {
             'Content-Type': 'application/json'
         }
     });
-    const user = await updateUser.json();
+    const res = await req.json();
 
-    return user;
+    return res;
 }
 
 const login = async (email, password) => {
-    const getUser = await fetch(`${API_URL}/users`);
-    const user = await getUser.json();
+    const req = await fetch(`${API_URL}/users/login`, {
+        method: 'POST',
+        body: JSON.stringify({email, password,}),
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    });
+    const res = await req.json();
 
-    return user;
+    return res;
 };
 
 const logout = () => {
-    localStorage.removeItem("user");
+    sessionStorage.removeItem("user");
 };
 
 const authService = {

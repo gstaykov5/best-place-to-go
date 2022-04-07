@@ -37,7 +37,7 @@ const Navbar = () => {
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const { isLoggedIn } = useSelector(state => state.registeLoginReducer);
   const { user } = useSelector(state => state.registeLoginReducer);
-  console.log(user);
+  console.log(user);  
   console.log(store.getState())
 
   const handleOpenUserMenu = (event) => {

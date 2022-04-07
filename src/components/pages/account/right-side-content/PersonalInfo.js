@@ -14,11 +14,11 @@ const PersonalInfo = () => {
     const [putData, setPutData] = useState({});
     const { user } = useSelector(state => state.registeLoginReducer);
 
-    useEffect(() => {
-        setPutData({...user});  
-    }, [user])
-    console.log(putData);
-    console.log('personalinfo',user)
+    // useEffect(() => {
+    //     setPutData({...putData});  
+    // }, [user])
+    // console.log(putData);
+    // console.log('personalinfo',user)
 
     const { register, control, handleSubmit, formState: { errors } } = useForm({
         resolver: yupResolver(validationChangeIfoSchema)
@@ -31,8 +31,8 @@ const PersonalInfo = () => {
 
     const onSubmit = data => {
         dispatch(update(putData, user.id));
-        console.log(store.getState())
     };
+
   return (
     <Fragment>
     <Grid item lg={6} xs={12} md={6}>
@@ -159,7 +159,7 @@ const PersonalInfo = () => {
               color="primary"
               onClick={handleSubmit(onSubmit)}
               >
-              Register
+              Edit
             </Button>
           </Box>
     </Grid>

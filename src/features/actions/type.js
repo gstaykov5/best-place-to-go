@@ -1,16 +1,18 @@
-export const REGISTER_SUCCESS = "REGISTER_SUCCESS";
-export const REGISTER_FAIL = "REGISTER_FAIL";
-export const UPDATE_USER = "UPDATE_USER";
-export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
-export const LOGIN_FAIL = "LOGIN_FAIL";
-export const LOGOUT = "LOGOUT";
+export const REGISTER_SUCCESS = 'REGISTER_SUCCESS';
+export const REGISTER_FAIL = 'REGISTER_FAIL';
+export const UPDATE_USER = 'UPDATE_USER';
+export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
+export const LOGIN_FAIL = 'LOGIN_FAIL';
+export const LOGOUT = 'LOGOUT';
 
 export const NEW_PLACE_SUCCESS = 'NEW_PLACE_SUCCESS';
 export const NEW_PLACE_FAIL = 'NEW_PLACE_FAIL';
 export const GET_ALL_PLACES = 'GET_ALL_PLACES';
+export const REMOVE_ALL_PLACES = 'REMOVE_ALL_PLACES';
 
-export const SET_MESSAGE = "SET_MESSAGE";
-export const CLEAR_MESSAGE = "CLEAR_MESSAGE";
+export const SET_MESSAGE = 'SET_MESSAGE';
+export const CLEAR_MESSAGE = 'CLEAR_MESSAGE';
 
 export const NEW_COMMENT = 'NEW_COMMENT';
 export const DELETE_COMMENT = 'DELETE_COMMENT';
+export const All_COMMENTS = 'All_COMMENTS';

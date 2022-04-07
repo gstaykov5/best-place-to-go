@@ -1,7 +1,7 @@
-const API_URL = "http://localhost:8080/api";
+const API_URL = "http://localhost:5000";
 
 const postPlace = async (data) => {
-    const req = await fetch(`${API_URL}/places`, {
+    const req = await fetch(`${API_URL}/bestPlaces/place`, {
         method: 'POST',
         body: JSON.stringify(data),
         headers: {
@@ -14,9 +14,10 @@ const postPlace = async (data) => {
 }
 
 const getAllPlaces = async () => {
-    const data = await fetch(`${API_URL}/places`);
-    const places = data.json();
-    return places;
+    const req = await fetch(`${API_URL}/bestPlaces/place`);
+    const res = await req.json();
+
+    return res;
 }
 
 const placeService = {

@@ -1,13 +1,15 @@
-import { NEW_COMMENT } from "../actions/type";
+import { NEW_COMMENT, All_COMMENTS } from "../actions/type";
 
-const initialState = []
+const initialState = {comments: []};
 
-const commentReducer = (state = [], action) => {
+const commentReducer = (state = initialState, action) => {
     const { type, payload } = action;
 
     switch (type) {
         case NEW_COMMENT:
-            return [...state, payload];
+            return {...state, comments: payload};
+        case All_COMMENTS:
+            return { comments: payload }
         default:
             return state;
     }

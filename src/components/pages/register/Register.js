@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from "react-redux";
 import { useForm, Controller } from 'react-hook-form';
@@ -19,9 +19,15 @@ const Register = () => {
   });
 
   const onSubmit = data => {
-    console.log(JSON.stringify(data, null, 2));
+    data.role = 'explorer';
+    data.country = '';
+    data.city = '';
+    data.favorites = [];
+    data.avatar = '';
+    data.registrationDate = new Date().toDateString();
+    // console.log(JSON.stringify(data, null, 2));
     dispatch(registration(data));
-    navigate('/Login', {replace: true});
+    navigate('/Home', {replace: true});
   };
 
   return (
@@ -65,8 +71,8 @@ const Register = () => {
                   // error={errors.gender ? true : false}
                 >
                   <option value={'empty'}></option>
-                  <option value={'mele'}>Mele</option>
-                  <option value={'femele'}>Femel</option>
+                  <option value={'male'}>Male</option>
+                  <option value={'female'}>Female</option>
                 </NativeSelect>
                 </FormControl>
               </Box>

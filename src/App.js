@@ -16,7 +16,8 @@ import Profile from './components/pages/profile/Profile';
 import Details from './components/pages/details/Details';
 
 import store from './features/store/store'
-import { getPlaces } from './features/actions/actionPlace';
+import { getAllPlaces } from './features/actions/actionPlace';
+import { allComments } from './features/actions/actionComments';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 
@@ -26,8 +27,9 @@ function App() {
   // console.log('isLoggedIn from App.js:',isLoggedIn);
 
   const a = store.getState()
-  console.log(a)
-  dispatch(getPlaces());
+  
+  dispatch(getAllPlaces());
+  dispatch(allComments());
   
   console.log(a)
   // yarn add cors indicative mongodb jsonwebtoken bcryptjs morgan

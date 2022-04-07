@@ -9,38 +9,62 @@ import FollowTheSignsIcon from '@mui/icons-material/FollowTheSigns';
 import SendIcon from '@mui/icons-material/Send';
 import EditIcon from '@mui/icons-material/Edit';
 
-import { newComment } from '../../../features/actions/actionComments';
+import { newComment, pushComment } from '../../../features/actions/actionComments';
 import store from '../../../features/store/store';
 
 const Details = () => {
-  // const [placeDetails, setPlaceDetails] = useState();
   const { id } = useParams();
   const dispatch = useDispatch();
   const { places } = useSelector(state => state.placesReducer);
   const { user } = useSelector(state => state.registeLoginReducer);
-  const comments = useSelector(state => state.commentsReducer);
-  const [comment, setComment] = useState({comments: [{comment: '', authorId: user.id}], placeId: id});
-  console.log(id)
-  console.log(user)
-  console.log('commentts:',comments)
+  const  { comments }  = useSelector(state => state.commentReducer);
+  const [comment, setComment] = useState({ placeId: id, comments: [{comment: '', authorId: user.id, username: user.username}]});
+  // const [comment, setComment] = useState({ placeId: id, comments: [{comment: '', authorId: user.id}]});
+  const [updateComments, setUpdateComments] = useState({});
+
   console.log(store.getState())
-  // const placeDetails = places.filter(pl => (pl.id === +id))
-  // useEffect(() => {
-  //   setPlaceDetails([...places.filter(pl => (pl.id === +id))]);
-  // }, [id])
+  useEffect(() => {
+  }, [])
 
+  // console.log(comments.comments)
+  // console.log(comment.comments[0].comment)
+  
   const handleComment = (e) => {
-    const com = e.target.value;
-    const immerComment = produce(comment, draft => {
-      draft.comments[0].comment = com;
-    })
-    setComment(immerComment);
-  }
+      const com = e.target.value;
+      const immerComment = produce(comment, draft => {
+        draft.comments[0].comment = com;
+      });
+      setComment(immerComment);
+    }
+    
+    const sendComment = () => {
+      const existingPlaceComments = comments.comment.find(e => e.placeId === id);
+      console.log(existingPlaceComments._id)
+      console.log(comments)
 
-  const sendComment = () => {
-    setComment({...comment});
-    dispatch(newComment(comment));
-    console.log(comment)
+      if (existingPlaceComments) {
+        // const immerComment = produce(existingPlaceComments.comments, draft => {
+        //   draft.push(comment.comments[0]);
+        // })
+
+        setUpdateComments({comments: produce(existingPlaceComments.comments, draft => {
+          draft.push(comment.comments[0]);
+        })})
+
+        console.log(updateComments)
+        // console.log(immerComment)
+        console.log(existingPlaceComments._id)
+        console.log(comments)
+
+        dispatch(pushComment(updateComments, existingPlaceComments._id));
+      } else {
+
+        // dispatch(newComment([comment], user.id));
+      }
+
+
+
+    console.log([comment])
   }
 
   return (
@@ -48,30 +72,34 @@ const Details = () => {
         <Box sx={{flexGrow: 1}}>
             <Grid container style={{marginTop: '100px', justifyContent: 'center'}}>
                 <Grid item lg={4} md={6} xs={12} sx={{ml: 10}} >
-                    <Box sx={{ width: 500, height: 450, overflowY: 'scroll' }}>
+                  <Box sx={{ width: 500, height: 450, overflowY: 'scroll' }}>
+                      {places.filter(pl => (pl._id === id)).map((item) => (
                         <ImageList variant="masonry" cols={3} gap={8} >
-                            {places.filter(pl => (pl.id === +id))[0].images.map((item) => (
-                                <ImageListItem key={item.image} >
-                                    <img
-                                      src={`${item.image}?w=248&fit=crop&auto=format`}
-                                      srcSet={`${item.image}?w=248&fit=crop&auto=format&dpr=2 2x`}
-                                      alt={item.country}
-                                      loading="lazy"
-                                    />
-                                </ImageListItem>
-                            ))}
+                          {item.images.map((img) => (
+                            <ImageListItem key={img.image} >
+                              <img
+                                src={`${img.image}?w=248&fit=crop&auto=format`}
+                                srcSet={`${img.image}?w=248&fit=crop&auto=format&dpr=2 2x`}
+                                alt={item.country}
+                                loading="lazy"
+                              />
+                            </ImageListItem>
+                          ))}
                         </ImageList>
-                    </Box>
+                      ))}
+                  </Box>
                 </Grid>
 
                 <Grid item lg={6} md={6} xs={12} style={{boxShadow: '10px 10px 10px 5px grey'}}>
-                  {places.filter(pl => (pl.id === +id)).map(item => (
+                  {places.filter(pl => pl._id === id).map(item => (
                     <Box key={item.id}>
                       <Grid item sx={{ml: 10}} >
-                        <Typography variant="h4" style={{ marginTop: '30px',  marginBottom: '20px' }}>{item.country}</Typography>
-                        <Typography variant="h5" style={{ marginBottom: '20px' }}>{item.city}</Typography>
+                        <Typography variant="h4" style={{ marginTop: '30px',  marginBottom: '50px' }}>{item.country}</Typography>
+                        <Typography variant="h5" style={{ marginBottom: '50px' }}>{item.city}</Typography>
                         <Typography variant="h5" >{item.description}</Typography>
                       </Grid>
+
+
 
                       <Grid item lg={12} sx={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'flex-end', p: 12, m: 1, }}>
                         <Button sx={{ height: '57px' }} size='large' variant="outlined" endIcon={<EditIcon />}>Edit</Button>

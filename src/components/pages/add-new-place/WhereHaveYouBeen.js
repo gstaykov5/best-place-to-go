@@ -27,7 +27,6 @@ function WhereHaveYouBeen() {
   const [area, setArea] = useState('');
   const dispatch = useDispatch();
   const { user } = useSelector(state => state.registeLoginReducer);
-  console.log(user)
 
   const { register, control, handleSubmit, formState: { errors } } = useForm({
     resolver: yupResolver(validationWhereHaveYouBeenSchema)
@@ -36,27 +35,27 @@ function WhereHaveYouBeen() {
   const handleAddImageField = () => {
     setImageField([...imageField, {image: ''}]);
   };
-
-  const handleRemoveImageField = () => {
-    const length = imageField.length - 1;
-    length > 0 && setImageField(imageField.filter((img, i) => i !== length));
+  
+  const handleRemoveImageField = (i) => {
+    const list = [...imageField];
+    list.splice(i, 1);
+    setImageField(list);
   };
-
-  const handleInputChange = e => {
+  
+  const handleInputChange = (e, i)=> {
     const { name, value } = e.target;
-    const imageHelper = [...imageField];
-    const i = imageField.length - 1;
-    imageHelper[i][name] = value;
-    setImageField(imageHelper);
+    const list = [...imageField];
+    list[i][name] = value;
+    setImageField(list);
   };
-
-  console.log(imageField)
-
+  
   const onSubmit = data => {
+    console.log(imageField)
+    delete data.image;
+    console.log('data',data)
     setNewPlace({ ...data, date: date, area: area, images: imageField, authorID: user.id });
     dispatch(place(newPlace));
     console.log('new place:',newPlace);
-    console.log(JSON.stringify(data, null, 2));
   }
 
   return (
@@ -133,33 +132,39 @@ function WhereHaveYouBeen() {
             <StaticDatePicker />
           </Grid>
 
-          <Grid item xs={12} lg={12} mb={10} onChange={handleInputChange}>
+          <Grid item xs={12} lg={12} mb={10}>
             {imageField.map((img, i) => {
               return (
-              <TextField
-                required
-                key={i}
-                sx={{marginBottom: 5}}
-                variant="standard"
-                id='image'
-                name='image'
-                label='Image'
-                value={img.image}
-                fullWidth
-                // value={img.image}
-                {...register('image')}
-                error={errors.image ? true : false}
-                >
-            </TextField>
+                <Box key={i}>
+                  <TextField
+                    required                    
+                    sx={{marginBottom: 5}}
+                    variant="standard"
+                    id='image'
+                    name='image'
+                    label='Image'
+                    value={img.image}
+                    fullWidth
+                    // value={img.image}
+                    {...register('image')}
+                    error={errors.image ? true : false}
+                    onChange={e => handleInputChange(e, i)}
+                    >
+                  </TextField>
+                  <Box >
+                    {imageField.length !== 1 &&
+                    <Button color='error' variant='contained' onClick={() => handleRemoveImageField(i)}>
+                      Remove <RemoveIcon />
+                    </Button>}
+                    {imageField.length - 1 === i && 
+                      <Button color='primary' variant='contained' onClick={handleAddImageField}>
+                      Add new image field<AddIcon/>
+                    </Button>}
+                  </Box>
+                </Box>
             )})}
-            <Typography variant="inherit" color="textSecondary">{errors.image?.message}</Typography>
+              <Typography variant="inherit" color="textSecondary">{errors.image?.message}</Typography>
             
-              <Button color='primary' variant='contained' onClick={handleAddImageField}>
-                Add new image field<AddIcon/>
-              </Button>
-              <Button color='error' variant='contained' onClick={handleRemoveImageField}>
-                Remove <RemoveIcon />
-              </Button>
               <Button color='warning' variant='contained' onClick={handleSubmit(onSubmit)}>
                 Submit your new place<ScheduleSendIcon />
               </Button>

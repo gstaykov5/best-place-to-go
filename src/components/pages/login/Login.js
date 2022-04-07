@@ -48,15 +48,13 @@ const Login = props => {
     e.preventDefault();
     
     dispatch(login(email, password))
-      .then((res) => {
-        if (!res) {
-          setOpenSnackBar(true);
-        } else {
-          setOpenSnackBar(true);
-          setOpenSnackBar(false);
-          navigate('/BestPlaceToGo', {replace: true});
-        }
-      })
+      if (!isLoggedIn) {
+        setOpenSnackBar(true);
+      } else {
+        setOpenSnackBar(true);
+        setOpenSnackBar(false);
+        navigate('/Home', {replace: true});
+      }
   };
   
   return (

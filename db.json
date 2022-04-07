@@ -28,6 +28,47 @@
       "confirmPassword": "!1qwertQQQQ",
       "acceptTerms": true,
       "id": 3
+    },
+    {
+      "id": 4
+    },
+    {
+      "id": 5
+    },
+    {
+      "id": 6
+    },
+    {
+      "fullname": "sad",
+      "username": "asdasdsa",
+      "email": "asd@abv.bg",
+      "password": "!1qwertQQQQ",
+      "confirmPassword": "!1qwertQQQQ",
+      "acceptTerms": true,
+      "role": "explorer",
+      "id": 7
+    },
+    {
+      "fullname": "asdasd",
+      "username": "asdasd",
+      "email": "asd@abv.bg",
+      "password": "!1qwertQQQQ",
+      "confirmPassword": "!1qwertQQQQ",
+      "acceptTerms": true,
+      "role": "explorer",
+      "registrationDate": "Tue Apr 05 2022",
+      "id": 8
+    },
+    {
+      "fullname": "Georgi Staykov",
+      "username": "GeorgiStaykov",
+      "email": "goshi@gmail.com",
+      "password": "!1qwertQQQQ",
+      "confirmPassword": "!1qwertQQQQ",
+      "acceptTerms": true,
+      "role": "explorer",
+      "registrationDate": "Tue Apr 05 2022",
+      "id": 9
     }
   ],
   "places": [
