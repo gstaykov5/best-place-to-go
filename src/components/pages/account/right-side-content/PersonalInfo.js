@@ -1,24 +1,18 @@
-import React, {useState, useEffect, Fragment } from 'react';
+import React, {useState, Fragment } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useForm, Controller } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 
 import { Box, Button, Grid, TextField, Typography } from '@material-ui/core'
 
 import validationChangeIfoSchema from '../validationRegistrationSchema';
-import store from '../../../../features/store/store'
 import { update } from '../../../../features/actions/actionAuth';
 
 const PersonalInfo = () => {
     const dispatch = useDispatch();
     const [putData, setPutData] = useState({});
+    const [ lastModifieDate, setLastModifieDate] = useState(new Date().toDateString());
     const { user } = useSelector(state => state.registeLoginReducer);
-
-    // useEffect(() => {
-    //     setPutData({...putData});  
-    // }, [user])
-    // console.log(putData);
-    // console.log('personalinfo',user)
 
     const { register, control, handleSubmit, formState: { errors } } = useForm({
         resolver: yupResolver(validationChangeIfoSchema)
@@ -30,7 +24,9 @@ const PersonalInfo = () => {
     }
 
     const onSubmit = data => {
-        dispatch(update(putData, user.id));
+        setPutData({...putData, lastModifieDate})
+        console.log(putData)
+        dispatch(update(user.id, putData));
     };
 
   return (
@@ -103,15 +99,15 @@ const PersonalInfo = () => {
             </Grid>
         </Grid>
 
-            <Typography variant="h6" color="primary">Change image</Typography>
+            <Typography variant="h6" color="primary">Change avatar</Typography>
         <Grid item lg={12} style={{ marginBottom: '20px' }}>
             <TextField
                 helperText='copy/paste image URL'
-                label="Image"
+                label="Avatar"
                 variant="standard"
                 color='primary'
                 style={{width: '75%', marginBottom: '20px' }}
-                onChange={handleChanges('image')}
+                onChange={handleChanges('avatar')}
                 />
         </Grid>
 

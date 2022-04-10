@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { NavLink } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -18,18 +18,19 @@ import { makeStyles } from '@mui/styles';
 import SearchField from './SearchField';
 import store from '../../features/store/store'
 import ResponsiveButton from './ResponsiveButton';
+import { getAllPlaces } from '../../features/actions/actionPlace';
 
 const useStyles = makeStyles({
   appbar: {
     width: '99%',
     margin: 'auto',
-    background: 'linear-gradient(45deg, #BA2B04 25%, #26F40A 90%)'
+    background: 'linear-gradient(45deg, #63c967 25%, #03185a 90%)'
   },
 });
 
 const isLoggedInPages = ['Home', 'Meetup', 'BestPlaceToGo', 'WhereHaveYouBeen?', 'Favorite'];
 const isNotLoggedInPages = ['Home', 'Register', 'Login'];
-const settings = ['Profile', 'Account', 'Favorite', 'WhereHaveYouBeen?', 'ControlUsers', 'Logout'];
+const settings = ['Account', 'Favorite', 'WhereHaveYouBeen?', 'ControlUsers', 'Logout'];
 
 const Navbar = () => {
   const classes = useStyles();
@@ -37,8 +38,8 @@ const Navbar = () => {
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const { isLoggedIn } = useSelector(state => state.registeLoginReducer);
   const { user } = useSelector(state => state.registeLoginReducer);
-  console.log(user);  
-  console.log(store.getState())
+  console.log(user);
+  console.log(store.getState());
 
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
@@ -75,14 +76,15 @@ const Navbar = () => {
               <NavLink to={`${page}`} style={{ textDecoration: 'none' }} key={page}>
                 <Button                
                   // onClick={handleCloseNavMenu}
-                  sx={{ my: 2, color: 'black', display: 'block'}}
+                  sx={{ my: 2, color: 'white', display: 'block',}}
                   variant='contained'
-                  color='warning'
+                  color='info'
                 >
                   {page}
                 </Button>
               </NavLink>
               ))}
+
             {!isLoggedIn && isNotLoggedInPages.map((page) => (
               <NavLink to={`${page}`} style={{ textDecoration: 'none'}} key={page}>
                 <Button
@@ -103,7 +105,7 @@ const Navbar = () => {
           {isLoggedIn && <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt={user.username} src="https://www.foodsafetynews.com/files/2021/03/map-Canada.jpg" />
+                <Avatar alt={user.username} src={user.avatar} />
               </IconButton>
             </Tooltip>
             <Menu

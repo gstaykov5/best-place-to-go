@@ -1,8 +1,11 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { styled, alpha } from '@mui/material/styles';
+import React, { useState } from 'react';
+import { styled } from '@mui/material/styles';
+import { alpha } from '@material-ui/core/styles';
 import SearchIcon from '@mui/icons-material/Search';
 import InputBase from '@mui/material/InputBase';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { SEARCH_PLACE } from '../../features/actions/type';
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -46,7 +49,26 @@ const Search = styled('div')(({ theme }) => ({
     },
   }));
   
-const SearchField = props => {
+const SearchField = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  // const [search, setSearch] = useState({});
+  const { places }  = useSelector(state => state.placesReducer);
+  
+
+  const handleSearch = (e) => {
+    const search = e.target.value;
+    const searched = places.filter(place => {
+      return place.country.toUpperCase().indexOf(search.toUpperCase()) >= 0;
+    })
+    dispatch({
+      type: SEARCH_PLACE,
+      payload: searched
+    })
+    console.log(searched)
+    navigate('/Search')
+  }
+
   return (
     <Search sx={{ marginRight: 2 }}>
       <SearchIconWrapper>
@@ -55,6 +77,7 @@ const SearchField = props => {
       <StyledInputBase
         placeholder="Search…"
         inputProps={{ 'aria-label': 'search' }}
+        onChange={handleSearch}
       />
     </Search>
   )

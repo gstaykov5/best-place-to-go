@@ -20,7 +20,7 @@ export const allComments = (placeId) => async dispatch => {
     const comments = await commentsService.getAllComments();
 
     const placeComments = comments.comment.filter(place => place.placeId === placeId)
-        .sort((a, b) => new Date(b.date) - new Date(a.date));
+        .sort((a, b) => new Date(a.date) - new Date(b.date));
 
     if(comments.comment.length === 0) {
         dispatch({
@@ -34,7 +34,7 @@ export const allComments = (placeId) => async dispatch => {
     })
 }
 
-export const deleteComment = (commentId) => async dispatch =>{
+export const deleteComment = commentId => async dispatch =>{
     const comments = await commentsService.deleteComment(commentId);
 
     dispatch({

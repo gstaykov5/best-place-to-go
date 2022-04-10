@@ -1,36 +1,24 @@
-import React, { useEffect } from 'react'
+import React from 'react'
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
-
 
 import { Grid, IconButton, ImageList, ImageListItem, ImageListItemBar } from '@mui/material';
-
 import InfoIcon from '@mui/icons-material/Info';
 import FavoriteBorderSharpIcon from '@mui/icons-material/FavoriteBorderSharp';
 import FavoriteRoundedIcon from '@mui/icons-material/FavoriteRounded';
-
 import { update } from '../../../features/actions/actionAuth';
-import { allComments } from '../../../features/actions/actionComments';
-import { getAllPlaces } from '../../../features/actions/actionPlace';
 
-
-const BestPlaceToGo = () => {
+function Search() {
   const dispatch = useDispatch();
-  const { places }  = useSelector(state => state.placesReducer);
+  const { search }  = useSelector(state => state.searchReducer);
   const { user } = useSelector(state => state.registeLoginReducer);
-
-  
-  useEffect(() => {
-    dispatch(getAllPlaces());
-    console.log(places)
-  }, [])
 
   const handleFavorite = placeId => {
     user.favorites.includes(placeId)
       ? dispatch(update(user.id, placeId, true, 'pull'))
       : dispatch(update(user.id, placeId, true, 'push'))
   }
-
+console.log(search)
   return (
     <Grid
       container
@@ -41,8 +29,8 @@ const BestPlaceToGo = () => {
       justify="center"
     >
       <ImageList sx={{ width: 1000 }}>
-        {places && places?.map((place) => (
-          <ImageListItem key={place._id} sx={{boxShadow: '2px 2px 10px black', ml: 2, mb: 2}} >
+        {search && search?.map((place) => (
+          <ImageListItem key={place._id}>
             <img
               src={`${place.images[0].image}?w=248&fit=crop&auto=format`}
               // srcSet={`${places.images}?w=248&fit=crop&auto=format&dpr=2 2x`}
@@ -80,7 +68,7 @@ const BestPlaceToGo = () => {
                   aria-label={`info about ${place.country}`}
                   // onClick={() => handleComments(place._id)}
                 >
-                  <Link to={`details/${place._id}`}><InfoIcon /></Link>
+                  <Link to={`/Search/details/${place._id}`}><InfoIcon /></Link>
                 </IconButton>
               }
             />
@@ -91,4 +79,4 @@ const BestPlaceToGo = () => {
   )
 }
 
-export default BestPlaceToGo;
+export default Search

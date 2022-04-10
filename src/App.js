@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Routes ,Route } from 'react-router-dom';
+import './App.css';
 
 import Navbar from './components/shared/Navbar';
 import BestPlaceToGo from './components/pages/best-place-to-go/BestPlaceToGo';
@@ -14,15 +15,21 @@ import ControlUsers from './components/pages/control-users/ControlUsers';
 import WhereHaveYouBeen from './components/pages/add-new-place/WhereHaveYouBeen';
 import Profile from './components/pages/profile/Profile';
 import Details from './components/pages/details/Details';
+import Edit from './components/pages/details/Edit';
 
 import store from './features/store/store'
+import Search from './components/pages/Search/Search';
 import { getAllPlaces } from './features/actions/actionPlace';
 import { useDispatch } from 'react-redux';
+import Footer from './components/shared/Footer';
 
 function App() {
   const dispatch = useDispatch();
   
-  dispatch(getAllPlaces());
+  useEffect(() => {
+
+    dispatch(getAllPlaces());
+  }, [])
   
   const a = store.getState()
   
@@ -37,14 +44,19 @@ function App() {
         <Route path="/Meetup" element={<Meetup />} />
         <Route path="/WhereHaveYouBeen" element={<WhereHaveYouBeen />} />
         <Route path="/Favorite" element={<Favorite />} />
+        <Route path='/Favorite/Details/:id' element={<Details />} />
         <Route path='/Account' element={<Account />} />
         <Route path='/Profile' element={<Profile />} />
-        <Route path='/Details/:id' element={<Details />} />
+        <Route path='/BestPlaceToGo/Details/:id' element={<Details />} />
+        <Route path='/BestPlaceToGo/Details/:id/Edit' element={<Edit />} />
         <Route path='/ControlUsers' element={<ControlUsers />} />
+        <Route path='/Search' element={<Search />} />
+        <Route path='/Search/Details/:id' element={<Details />} />
         <Route path="/Login" element={<Login />} />
         <Route path="/Register" element={<Register />} />
         <Route path="/Logout" element={<Logout />} />
       </Routes>
+      {/* <Footer /> */}
     </div>
   );
 }

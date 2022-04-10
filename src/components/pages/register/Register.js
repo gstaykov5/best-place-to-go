@@ -23,8 +23,9 @@ const Register = () => {
     data.country = '';
     data.city = '';
     data.favorites = [];
-    data.avatar = '';
+    data.avatar = 'https://media.istockphoto.com/vectors/user-icon-human-person-sign-vector-id936015274?b=1&k=20&m=936015274&s=170667a&w=0&h=KoOESjIY97CR8tJzXDv47PWu0JEmCChXTi1Z6Gthf4k=';
     data.registrationDate = new Date().toDateString();
+    data.lastModifieDate = new Date().toDateString();
     
     dispatch(registration(data));
     navigate('/Home', {replace: true});

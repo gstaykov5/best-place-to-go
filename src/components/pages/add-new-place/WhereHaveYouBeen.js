@@ -1,32 +1,61 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from 'react-leaflet';
 
 import { Box, Button, Grid, Paper, TextField, Typography } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import ScheduleSendIcon from '@mui/icons-material/ScheduleSend';
 import RemoveIcon from '@mui/icons-material/Remove';
+import DateFnsUtils from '@date-io/date-fns';
+import { DatePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
 
 import validationWhereHaveYouBeenSchema from './validationWhereHaveYouBeenSchema';
-import StaticDatePicker from './DatePicker';
 import { useDispatch, useSelector } from 'react-redux';
-import { place } from '../../../features/actions/actionPlace';
+import { postNewPlace } from '../../../features/actions/actionPlace';
+import { SET_LOCATION } from '../../../features/actions/type';
 
-// const Item = styled(Paper)(({ theme }) => ({
-//   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-//   ...theme.typography.body2,
-//   padding: theme.spacing(1),
-//   textAlign: 'center',
-//   color: theme.palette.text.secondary,
-// }));
+function LocationMarker() {
+  const [position, setPosition] = useState([]);
+  const dispatch = useDispatch();
+  useMapEvents({
+    click(e) {
+      setPosition([e.latlng.lat, e.latlng.lng])
+      dispatch({
+        type: SET_LOCATION,
+        payload: position
+      })
+      console.log(position)
+    },
+    locationfound(e) {
+      
+    },
+  })
 
-function WhereHaveYouBeen() {
+
+  return position.length > 0 && (
+    <Marker position={position}>
+      <Popup>You are here</Popup>
+    </Marker>
+  )
+}
+
+const WhereHaveYouBeen = ({ action }) => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const [imageField, setImageField] = useState([{image: ''}]);
   const [date, changeDate] = useState(new Date().toLocaleString());
-  const [newPlace, setNewPlace] = useState({});
   const [area, setArea] = useState('');
-  const dispatch = useDispatch();
+  const [location, setLocation] = useState([]);
+
   const { user } = useSelector(state => state.registeLoginReducer);
+  const { position } = useSelector(state => state.mapLocationReducer);
+
+  useEffect(() => {
+    setLocation(position);
+  }, [])
 
   const { register, control, handleSubmit, formState: { errors } } = useForm({
     resolver: yupResolver(validationWhereHaveYouBeenSchema)
@@ -50,12 +79,14 @@ function WhereHaveYouBeen() {
   };
   
   const onSubmit = data => {
-    console.log(imageField)
     delete data.image;
-    console.log('data',data)
-    setNewPlace({ ...data, date: date, area: area, images: imageField, authorID: user.id });
-    dispatch(place(newPlace));
-    console.log('new place:',newPlace);
+    data.date = date;
+    data.area = area;
+    data.images = imageField;
+    data.authorId = user.id;
+    data.location = position ? position : ['8.624472107633936', '-83.4280627865926'];
+    dispatch(postNewPlace(data));
+    navigate('/BestPlaceToGo', {replace: true});
   }
 
   return (
@@ -98,8 +129,6 @@ function WhereHaveYouBeen() {
 
           <Grid item xs={12} lg={12}>
             <TextField
-              // required
-              // sx={{boxShadow: 3}}
               variant="standard"
               id='area'
               name='area'
@@ -114,7 +143,6 @@ function WhereHaveYouBeen() {
           <Grid item xs={12} lg={12}>
             <TextField
               required
-              // sx={{boxShadow: 3}}
               variant="standard"
               id='description'
               name='description'
@@ -128,9 +156,29 @@ function WhereHaveYouBeen() {
               <Typography variant="inherit" color="textSecondary">{errors.description?.message}</Typography>
           </Grid>
 
-          <Grid item xs={12} lg={12}>
-            <StaticDatePicker />
-          </Grid>
+            <Grid item xs={12} lg={4}>
+              <MuiPickersUtilsProvider utils={DateFnsUtils} >
+                <DatePicker
+                  autoOk
+                  orientation="landscape"
+                  variant="static"
+                  openTo="date"
+                  value={date}
+                  onChange={changeDate}
+                  />
+              </MuiPickersUtilsProvider>
+            </Grid>
+
+            <Grid item xs={12} lg={8}>
+              <MapContainer center={[43.777702, -79.233238]} zoom={10} style={{width: '100%', height: '50vh'}}>
+                <TileLayer
+                
+                  attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                  url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                  />
+                <LocationMarker />
+              </MapContainer>
+            </Grid>
 
           <Grid item xs={12} lg={12} mb={10}>
             {imageField.map((img, i) => {
@@ -145,7 +193,6 @@ function WhereHaveYouBeen() {
                     label='Image'
                     value={img.image}
                     fullWidth
-                    // value={img.image}
                     {...register('image')}
                     error={errors.image ? true : false}
                     onChange={e => handleInputChange(e, i)}

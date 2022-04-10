@@ -21,7 +21,7 @@ const Account = () => {
                 <ImageList sx={{ width: 'auto', height: 250, marginLeft: '170px' }} >
                     <ImageListItem key={1} sx={{width: 220}}>
                         <img
-                          src={'https://thumbs.dreamstime.com/b/aerial-view-lago-antorno-dolomites-lake-mountain-landscape-alps-peak-misurina-cortina-di-ampezzo-italy-reflected-103752677.jpg'}
+                          src={user.avatar}
                         //   srcSet={}
                           alt={'kek'}
                         />

@@ -13,10 +13,10 @@ const register = async (data) => {
     return res;
 };
 
-const update = async (data, id) => {
+const update = async (id, data, updateFavorites, push_pull) => {
     const req = await fetch(`${API_URL}/users/edit/${id}`, {
         method: 'POST',
-        body: JSON.stringify(data),
+        body: JSON.stringify({data, updateFavorites, push_pull}),
         headers: {
             'Content-Type': 'application/json'
         }

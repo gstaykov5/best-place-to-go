@@ -16,3 +16,8 @@ export const CLEAR_MESSAGE = 'CLEAR_MESSAGE';
 export const NEW_COMMENT = 'NEW_COMMENT';
 export const DELETE_COMMENT = 'DELETE_COMMENT';
 export const ALL_COMMENTS = 'ALL_COMMENTS';
+
+export const SET_LOCATION = 'SET_LOCATION';
+export const CLEAR_LOCATION = 'CLEAR_LOCATION';
+
+export const SEARCH_PLACE = 'SEARCH_PLACE';

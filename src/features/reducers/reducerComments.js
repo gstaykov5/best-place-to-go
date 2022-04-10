@@ -14,9 +14,6 @@ const commentReducer = (state = initialState, action) => {
         case DELETE_COMMENT:
             return produce(state, draft => {
                 draft.comments.filter(comment => {
-                    console.log(comment)
-                    console.log(comment._id)
-                    console.log(payload.comment._id)
                     return comment._id !== payload.comment._id
                 })
             })

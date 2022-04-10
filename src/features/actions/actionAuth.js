@@ -14,10 +14,12 @@ import authService from '../../services/auth.service';
 export const registration = (data) => async dispatch => {
     const user = await authService.register(data);
 
-    if (!user.username) {
+    if (!user.username || user.type === 'errors') {
         dispatch({
             type: REGISTER_FAIL,
         })
+
+        return;
     }
     
     dispatch({
@@ -64,8 +66,8 @@ console.log({user})
     sessionStorage.setItem('user', JSON.stringify(user));
 }
 
-export const update = (data, id) => async dispatch => {
-    const user = await authService.update(data, id);
+export const update = (id, data, updateFavorites, push_pull) => async dispatch => {
+    const user = await authService.update(id, data, updateFavorites, push_pull);
 
     if(user.username) {
         dispatch({
